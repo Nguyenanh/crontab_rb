@@ -1,13 +1,14 @@
 require 'sqlite3'
-require 'pry'
 
 module CrontabRb
   class Database
     attr_reader :db
     
     CRONTABRB = 'crontab_rb'
-    
-    @@db = SQLite3::Database.new "#{CRONTABRB}.db"
+
+    Dir.mkdir(CrontabRb.configuration.path_storage) unless File.directory?(CrontabRb.configuration.path_storage) 
+
+    @@db = SQLite3::Database.new "#{CrontabRb.configuration.path_storage}#{CRONTABRB}.db"
     @@db.results_as_hash = true
     
     def initialize

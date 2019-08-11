@@ -1,4 +1,3 @@
-require "crontab_rb/template"
 module CrontabRb
   class Parse
     def self.from_database

@@ -36,7 +36,7 @@ module CrontabRb
     end
     
     def validate
-      raise "Time of crontab_rb only accept #{CrontabRb::Template::EVERY.keys.join(",")}" unless CrontabRb::Template::EVERY.keys.include?(time)
+      raise "Time attribute of crontab_rb only accept #{CrontabRb::Template::EVERY.keys.join(",")}" unless CrontabRb::Template::EVERY.keys.include?(time)
     end
     
     def self.convert_to_symbol(hash)

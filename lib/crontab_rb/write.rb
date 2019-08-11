@@ -1,4 +1,3 @@
-require "crontab_rb/parse"
 module CrontabRb
   class Write
     def self.write_crontab
