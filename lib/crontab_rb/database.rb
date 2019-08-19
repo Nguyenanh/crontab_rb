@@ -1,52 +1,50 @@
-require 'sqlite3'
-
+require "pstore"
+require 'securerandom'
 module CrontabRb
   class Database
-    attr_reader :db
-    
     CRONTABRB = 'crontab_rb'
 
     Dir.mkdir(CrontabRb.configuration.path_storage) unless File.directory?(CrontabRb.configuration.path_storage) 
 
-    @@db = SQLite3::Database.new "#{CrontabRb.configuration.path_storage}#{CRONTABRB}.db"
-    @@db.results_as_hash = true
+    @@pstore = PStore.new("#{CrontabRb.configuration.path_storage}#{CRONTABRB}.pstore")
     
-    def initialize
-      create_table unless exists?
+    def initialize(options={})
+      @options                 = {}
+      @options[:id]            = options[:id] || SecureRandom.uuid
+      @options[:name]          = options[:name]
+      @options[:command]       = options[:command]
+      @options[:time]          = options[:time]
+      @options[:at]            = options[:at]
+      @options[:updated_at]    = Time.now.strftime("%Y-%m-%d %H:%M:%S")
     end
   
-    def create(options={})
-      options[:updated_at] = options[:updated_at].strftime("%Y-%m-%d %H:%M:%S")
-      @@db.execute "INSERT INTO #{CRONTABRB} (name, command, time, updated_at) values (:name, :command, :time, :updated_at)", options
+    def self.create(options={})
+      new(options).save
     end
     
-    def last
-      @@db.execute "SELECT * FROM #{CRONTABRB} ORDER BY id DESC LIMIT 1;";
+    def self.all
+      @@pstore.transaction(true) do
+        @@pstore.roots.map {|root| @@pstore[root]}
+      end
     end
     
-    def all
-      @@db.execute "SELECT * FROM #{CRONTABRB} ORDER BY id DESC";
+    def self.find(name)
+      @@pstore.transaction(true) do
+        @@pstore[name]
+      end
     end
-    
-    private 
-    
-    def create_table
-      @@db.execute <<-SQL
-        create table "#{CRONTABRB}" (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          name varchar(30),
-          command varchar(50),
-          time varchar(50),
-          updated_at varchar(50)
-        );
-      SQL
+      
+    def self.delete(name)
+      @@pstore.transaction do
+        @@pstore.delete(name)
+      end
     end
-    
-    def exists?
-      table = @@db.execute <<-SQL
-        SELECT * FROM sqlite_master WHERE type='table' AND name="#{CRONTABRB}";
-      SQL
-      !table.empty?
+      
+    def save
+      @@pstore.transaction do
+        @@pstore[@options[:id]] = @options
+        @options
+      end
     end
   end
 end

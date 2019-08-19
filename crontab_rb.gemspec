@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "crontab_rb"
   spec.version       = CrontabRb::VERSION
   spec.authors       = ["Nguyen Anh"]
-  spec.email         = ["miyamoto.anh@gmail.com"]
+  spec.email         = ["cauut2117610@gmail.com"]
 
   spec.summary       = ""
   spec.description   = ""
@@ -33,6 +33,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "pry", "~> 0.12.2"
-  spec.add_dependency "sqlite3", "1.4.1"
 
 end
