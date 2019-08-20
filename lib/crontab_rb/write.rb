@@ -10,9 +10,6 @@ module CrontabRb
       success = $?.exitstatus.zero?
       if success
         puts "[write] crontab file updated"
-        exit(0)
-      else
-        exit(1)
       end
     end
   end
