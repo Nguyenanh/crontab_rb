@@ -35,7 +35,7 @@ module CrontabRb
             options[:at].to_i
           else
             t = options[:at].to_i*60
-            Time.at(t).utc.strftime("%H %M")
+            Time.at(t).utc.strftime("%M %H")
           end
         else
           options[key_symbol] || key
