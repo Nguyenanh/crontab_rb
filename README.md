@@ -1,39 +1,36 @@
-# CrontabRb
+crontab_rb is a Ruby gem that provides easy and safe way to manage your cron jobs unix file via CRUD.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/crontab_rb`. To experiment with that code, run `bin/console` for an interactive prompt.
+### Installation
 
-TODO: Delete this and the text above, and describe your gem
+```sh
+$ gem install crontab_rb
+```
 
-## Installation
-
-Add this line to your application's Gemfile:
+Or with Bundler in your Gemfile.
 
 ```ruby
 gem 'crontab_rb'
 ```
+Run bundle install to install the backend and crontab_rb gems.
 
-And then execute:
+### Getting started
 
-    $ bundle
+#### How to add a cron jobs
 
-Or install it yourself as:
+Example: `10 * * * * /bin/bash -l -c 'cd path_to_rails_app && bundle exec rake backup_db'` 
 
-    $ gem install crontab_rb
+```ruby
+$ CrontabRb::Cron.create(name: 'Backup database', time: '1', at: '10', command: 'rake backup_db')
 
-## Usage
+```
 
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
+### Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/crontab_rb.
 
-## License
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+### Contribute
+Fork Crontab UI and contribute to it. Pull requests are encouraged.
+
+### License
+[MIT](LICENSE.md)
