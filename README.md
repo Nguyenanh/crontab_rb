@@ -49,7 +49,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/Nguyen
 
 
 ### Contribute
-Fork Crontab UI and contribute to it. Pull requests are encouraged.
+Fork Crontab RB and contribute to it. Pull requests are encouraged.
 
 ### License
 [MIT](LICENSE.md)
