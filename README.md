@@ -15,14 +15,20 @@ Run bundle install to install the backend and crontab_rb gems.
 
 ### Getting started
 
-#### How to add a cron jobs
-
-Example: `10 * * * * /bin/bash -l -c 'cd path_to_rails_app && bundle exec rake backup_db'` 
+Add new a cron jobs at every 10th minute.
 
 ```ruby
-$ CrontabRb::Cron.create(name: 'Backup database', time: '1', at: '10', command: 'rake backup_db')
+# `*/10 * * * * /bin/bash -l -c 'cd path_to_rails_app && bundle exec rake backup_db'` 
 
+CrontabRb::Cron.create(name: 'Backup database', time: '1', at: '10', command: 'rake backup_db')
 ```
+
+Delete a cron jobs
+
+```ruby
+CrontabRb::Cron.destroy("64f4f0bc-ad80-48ef-bbb9-98c9c17624bd")
+```
+
 
 ### Contributing
 
