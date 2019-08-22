@@ -1,3 +1,7 @@
+# Crontab RB
+==========
+[![Gem Version](https://badge.fury.io/rb/crontab_rb.svg)](https://badge.fury.io/rb/crontab_rb)
+
 crontab_rb is a Ruby gem that provides easy and safe way to manage your cron jobs unix file via CRUD.
 
 ### Installation
@@ -41,7 +45,7 @@ CrontabRb::Cron.destroy("64f4f0bc-ad80-48ef-bbb9-98c9c17624bd", {name: 'Remove l
 
 ### Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/crontab_rb.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Nguyenanh/crontab_rb.
 
 
 ### Contribute
