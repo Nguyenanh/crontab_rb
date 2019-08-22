@@ -1,5 +1,4 @@
 # Crontab RB
-==========
 
 [![Gem Version](https://badge.fury.io/rb/crontab_rb.svg)](https://badge.fury.io/rb/crontab_rb)
 
