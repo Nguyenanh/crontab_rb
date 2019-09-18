@@ -6,7 +6,7 @@ module CrontabRb
     attr_accessor :time
     attr_accessor :at
     attr_accessor :updated_at
-    
+
     def initialize(attributes={})
       @id          = attributes[:id]
       @name        = attributes[:name]
@@ -15,7 +15,7 @@ module CrontabRb
       @at          = attributes[:at]
       @updated_at  = attributes[:updated_at]
     end
-    
+
     def self.create(options={})
       options = convert_to_symbol(options)
       cron = new(options)
@@ -26,19 +26,19 @@ module CrontabRb
       cron.write_crontab
       cron
     end
-    
+
     def self.all
       records = Database.all
       records.map {|record| new(record)}
     rescue
       []
     end
-        
+
     def self.find(id)
       record = Database.find(id)
       record.nil? ? nil : new(record)
     end
-    
+
     def self.update(id, options={})
       record = Database.find(id)
       return nil if record.nil?
@@ -52,7 +52,7 @@ module CrontabRb
       cron.write_crontab
       cron
     end
-    
+
     def self.destroy(id)
       record = Database.find(id)
       return nil if record.nil?
@@ -61,15 +61,15 @@ module CrontabRb
       cron.write_crontab
       cron
     end
-    
+
     def validate
       raise "Time attribute of crontab_rb only accept #{CrontabRb::Template::EVERY.keys.join(",")}" unless CrontabRb::Template::EVERY.keys.include?(time)
     end
-    
+
     def self.convert_to_symbol(hash)
       Hash[hash.map{|k, v| [k.to_sym, v]}]
     end
-    
+
     def write_crontab
       CrontabRb::Write.write_crontab
     end

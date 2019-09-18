@@ -2,7 +2,7 @@ module CrontabRb
   class Write
     def self.write_crontab
       contents = CrontabRb::Parse.from_database
-      command = "crontab -"      
+      command = "crontab -"
       IO.popen(command, 'r+') do |crontab|
         crontab.write(contents)
         crontab.close_write
