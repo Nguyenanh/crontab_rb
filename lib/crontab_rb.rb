@@ -5,11 +5,11 @@ module CrontabRb
   class << self
     attr_accessor :configuration
   end
-  
+
   def self.configuration
     @configuration ||= Configuration.new
   end
-  
+
   def self.configure
     yield(configuration)
   end
@@ -20,4 +20,3 @@ require "crontab_rb/template"
 require "crontab_rb/parse"
 require "crontab_rb/write"
 require "crontab_rb/cron"
-
