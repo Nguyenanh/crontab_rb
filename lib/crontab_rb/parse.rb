@@ -5,7 +5,7 @@ module CrontabRb
     end
 
     def initialize
-      @template     = "cd :path && bundle exec bin/rails runner -e production ':command'"
+      @template     = "cd :path && bundle exec bin/rails runner -e #{Rails.env} ':command' >/dev/null 2>&1"
       @job_template = "/bin/bash -l -c ':job'"
       @path         = Dir.pwd
     end
