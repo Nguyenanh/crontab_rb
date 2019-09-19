@@ -1,6 +1,5 @@
 require "crontab_rb/version"
 require "crontab_rb/configuration"
-
 module CrontabRb
   class << self
     attr_accessor :configuration

@@ -5,7 +5,8 @@ module CrontabRb
     end
 
     def initialize
-      @job_template = ":time /bin/bash -l -c 'cd :path && bundle exec bin/rails runner -e #{Rails.env} ':command''"
+      @template     = "cd :path && bundle exec bin/rails runner -e production ':command'"
+      @job_template = "/bin/bash -l -c ':job'"
       @path         = Dir.pwd
     end
 
@@ -18,30 +19,31 @@ module CrontabRb
         options[:type] = record[:time]
         options[:time] = Template::EVERY[options[:time]]
         options[:path] = @path
-        out = process_template(@job_template, options)
-        out = process_template(out, options)
-        contents << out + "\n"
+        job   = process_template(@template, options)
+        task  = process_template(@job_template, options.merge(:job => job))
+        timer = process_timer(options)
+        contents << timer + " " + task + "\n"
       end
       contents.join("\n")
     end
 
     protected
 
+    def process_timer(options)
+      options[:time].gsub(/:\w+/) do |key|
+        if options[:type].to_i/60 <= 1
+          options[:at].to_i
+        else
+          t = options[:at].to_i*60
+          Time.at(t).utc.strftime("%M %H")
+        end
+      end.gsub(/\s+/m, " ").strip
+    end
+
     def process_template(template, options)
       template.gsub(/:\w+/) do |key|
         before_and_after = [$`[-1..-1], $'[0..0]]
-        key_symbol = key.sub(':', '').to_sym
-        option = ''
-        if key_symbol === :at
-          if options[:type].to_i/60 <= 1
-            option = options[:at].to_i
-          else
-            t = options[:at].to_i*60
-            option = Time.at(t).utc.strftime("%M %H")
-          end
-        else
-          option = options[key_symbol] || key
-        end
+        option = options[key.sub(':', '').to_sym] || key
 
         if before_and_after.all? { |c| c == "'" }
           escape_single_quotes(option)

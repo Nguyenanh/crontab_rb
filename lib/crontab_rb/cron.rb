@@ -71,7 +71,7 @@ module CrontabRb
     end
 
     def write_crontab
-      CrontabRb::Write.write_crontab
+      Write.write_crontab
     end
   end
 end
