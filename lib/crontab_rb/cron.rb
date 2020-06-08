@@ -9,17 +9,16 @@ module CrontabRb
 
     def initialize(attributes={})
       @id          = attributes[:id]
-      @name        = attributes[:name]
-      @command     = attributes[:command]
-      @time        = attributes[:time]
-      @at          = attributes[:at]
+      @name        = attributes[:name]    || ''
+      @command     = attributes[:command] || ''
+      @time        = attributes[:time]    || ''
+      @at          = attributes[:at]      || ''
       @updated_at  = attributes[:updated_at]
     end
 
     def self.create(options={})
       options = convert_to_symbol(options)
       cron = new(options)
-      cron.validate
       record          = Database.create(options)
       cron.id         = record[:id]
       cron.updated_at = record[:updated_at]
@@ -47,7 +46,6 @@ module CrontabRb
       record[:time]    = options[:time]    || record[:time]
       record[:at]      = options[:at]      || record[:at]
       cron = new(record)
-      cron.validate
       Database.new(record).save
       cron.write_crontab
       cron
@@ -60,10 +58,6 @@ module CrontabRb
       Database.delete(id)
       cron.write_crontab
       cron
-    end
-
-    def validate
-      raise "Time attribute of crontab_rb only accept #{CrontabRb::Template::EVERY.keys.join(",")}" unless CrontabRb::Template::EVERY.keys.include?(time)
     end
 
     def self.convert_to_symbol(hash)

@@ -15,7 +15,5 @@ module CrontabRb
 end
 
 require "crontab_rb/database"
-require "crontab_rb/template"
-require "crontab_rb/parse"
 require "crontab_rb/write"
 require "crontab_rb/cron"
