@@ -8,7 +8,7 @@ module CrontabRb
       records = Database.all
       records.each do |record|
         options = {
-          at: record[:at],
+          at: record[:at].presence,
           job_template: "/bin/bash -l -c ':job'",
           template: "cd :path && :bundle_command :runner_command -e :environment ':task' :output",
           environment_variable: 'RAILS_ENV',
