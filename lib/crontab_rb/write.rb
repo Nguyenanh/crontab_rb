@@ -10,9 +10,9 @@ module CrontabRb
         options = {
           at: record[:at].presence,
           job_template: "/bin/bash -l -c ':job'",
-          template: "cd :path && :bundle_command :runner_command -e :environment ':task' :output",
+          template: "cd :path || cd ../../current && :bundle_command :runner_command -e :environment ':task' :output",
           environment_variable: 'RAILS_ENV',
-          environment: 'production',
+          environment: 'staging',
           path: Dir.pwd,
           chronic_options: {},
           runner_command: "bin/rails runner",
