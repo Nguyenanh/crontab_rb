@@ -1,7 +1,7 @@
 require 'whenever'
 module CrontabRb
   class Write
-      def self.write_crontab
+    def self.write_crontab
       command = 'crontab -'
       shortcut_jobs, regular_jobs = [], []
       contents = ''
@@ -10,10 +10,10 @@ module CrontabRb
         options = {
           at: record[:at].presence,
           job_template: "/bin/bash -l -c ':job'",
-          template: "cd :path || cd ../../current && :bundle_command :runner_command -e :environment ':task' :output",
+          template: "cd :path && :bundle_command :runner_command -e :environment ':task' :output",
           environment_variable: 'RAILS_ENV',
           environment: 'staging',
-          path: Dir.pwd,
+          path: File.expand_path('../../current'),
           chronic_options: {},
           runner_command: "bin/rails runner",
           bundle_command: "bundle exec",
